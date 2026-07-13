@@ -246,10 +246,10 @@
   right: calc(100% + clamp(22px, 4vw, 74px));
   z-index: 4;
   display: grid;
-  width: clamp(160px, 15vw, 235px);
-  min-height: 94px;
-  place-items: center;
-  padding: 18px 24px;
+  width: clamp(210px, 19vw, 310px);
+  min-height: 72px;
+  place-items: center start;
+  padding: 15px 20px;
   border: 1px solid rgba(244, 241, 237, 0.42);
   color: var(--ink);
   background: rgba(5, 5, 6, 0.18);
@@ -283,10 +283,12 @@
 }
 
 .course-hover-label span {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: clamp(28px, 2.6vw, 44px);
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(13px, 1vw, 17px);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0.015em;
+  text-align: left;
 }
 
 .course-hover-label--visible {
@@ -325,8 +327,8 @@
 @media (max-width: 1180px) {
   .course-hover-label {
     right: calc(100% + 18px);
-    width: 150px;
-    min-height: 78px;
+    width: 210px;
+    min-height: 66px;
   }
 }
 

@@ -19,21 +19,21 @@ import infiniteAdGif from '../../output/gifs/15-infinite-ad.gif';
 
 // Replace `href` and `title` here when the final course pages are ready.
 const COURSES = [
-  { title: '提示词系统', href: '#', media: promptSystemGif },
-  { title: '连续性设计', href: '#', media: continuityGif },
-  { title: '情绪与色彩', href: '#', media: emotionColorGif },
-  { title: '东西方视觉', href: '#', media: eastWestGif },
-  { title: '景别与机位', href: '#', media: shotCameraGif },
-  { title: '透视与焦段', href: '#', media: perspectiveFocalGif },
-  { title: '光线与色彩', href: '#', media: lightColorGif },
-  { title: 'WAN 工作流', href: '#', media: wanWorkflowGif },
-  { title: '一致性控制', href: '#', media: consistencyGif },
-  { title: 'PRADA 女王', href: '#', media: pradaQueenGif },
-  { title: '视频元素', href: '#', media: videoElementsGif },
-  { title: '脚本诊断', href: '#', media: scriptDiagnosisGif },
-  { title: '视频情绪', href: '#', media: videoEmotionGif },
-  { title: '运镜设计', href: '#', media: cameraMovesGif },
-  { title: '无限广告', href: '#', media: infiniteAdGif }
+  { title: '3月9日 - 六维结构提示词', href: '#', media: promptSystemGif },
+  { title: '3月16日 - 稳定出图与“图像动作连续性”', href: '#', media: continuityGif },
+  { title: '3月30日 - 情绪的色彩心理学', href: '#', media: emotionColorGif },
+  { title: '4月8日 - 中西艺术风格对比：材质·光影·构图', href: '#', media: eastWestGif },
+  { title: '4月13日 - 景别、机位与构图', href: '#', media: shotCameraGif },
+  { title: '4月20日 - 视角与焦段', href: '#', media: perspectiveFocalGif },
+  { title: '5月11日 - 进阶光色系统', href: '#', media: lightColorGif },
+  { title: '5月18日 - WAN 2.7项目拆解：完整工作流与注意事项', href: '#', media: wanWorkflowGif },
+  { title: '5月25日 - 一致性系统', href: '#', media: consistencyGif },
+  { title: '6月1日 - 穿Prada的女王系列作品工作流分享', href: '#', media: pradaQueenGif },
+  { title: '6月9日 - 视频三要素', href: '#', media: videoElementsGif },
+  { title: '6月15日 - 视频崩坏诊断', href: '#', media: scriptDiagnosisGif },
+  { title: '6月22日 - 视频运镜基础', href: '#', media: videoEmotionGif },
+  { title: '6月29日 - 进阶运镜提示词＋案例分享', href: '#', media: cameraMovesGif },
+  { title: '7月6日 - 无穷鸡腿视频广告工作流拆解', href: '#', media: infiniteAdGif }
 ];
 
 export const COURSE_COUNT = COURSES.length;
