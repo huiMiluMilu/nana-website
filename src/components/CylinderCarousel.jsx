@@ -346,6 +346,8 @@ export default function CylinderCarousel() {
               }}
               className="course-card"
               href={course.href}
+              target="_blank"
+              rel="noreferrer"
               aria-label={`打开课程：${course.title}`}
               aria-hidden={logicalIndex === windowCenter ? 'false' : 'true'}
               tabIndex={logicalIndex === windowCenter ? 0 : -1}
