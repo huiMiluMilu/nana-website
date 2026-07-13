@@ -101,24 +101,19 @@ a {
 }
 
 .brand-mark {
-  display: inline-flex;
-  align-items: center;
+  display: block;
   justify-self: start;
-  gap: 12px;
-  color: var(--ink);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.24em;
+  width: clamp(72px, 5vw, 90px);
+  height: 28px;
   text-decoration: none;
 }
 
-.brand-orbit {
-  width: 18px;
-  height: 18px;
-  border: 1px solid var(--ink);
-  border-radius: 50%;
-  box-shadow: inset 6px 0 0 var(--acid);
-  transform: rotate(-35deg);
+.brand-mark img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .section-index {
@@ -298,16 +293,6 @@ h1 span:nth-child(3) {
   text-transform: uppercase;
 }
 
-.stage-number {
-  z-index: 3;
-  position: absolute;
-  top: 16%;
-  left: 24px;
-  color: rgba(244, 241, 237, 0.32);
-  font-size: 9px;
-  letter-spacing: 0.15em;
-}
-
 .stage-cross {
   z-index: 3;
   position: absolute;
@@ -411,8 +396,7 @@ h1 span:nth-child(3) {
     opacity: 0.45;
   }
 
-  .stage-guide p,
-  .stage-number {
+  .stage-guide p {
     display: none;
   }
 

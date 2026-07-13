@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 import SoftAurora from './components/SoftAurora';
-import CylinderCarousel, { COURSE_COUNT } from './components/CylinderCarousel';
+import CylinderCarousel from './components/CylinderCarousel';
 import WorksShowcase from './components/WorksShowcase';
 
 export default function App() {
@@ -68,11 +68,10 @@ export default function App() {
         <div className="parallax-chrome">
           <header className="topbar">
             <a className="brand-mark" href="#top" aria-label="NaNa home">
-              <span className="brand-orbit" aria-hidden="true" />
-              NANA
+              <img src="/brand/fengbian-horizontal-cn.png" alt="风变" />
             </a>
             <p className="section-index">01 / FIND COURSES</p>
-            <p className="location-mark">SHANGHAI / CN</p>
+            <p className="location-mark">Soulful Poetic</p>
           </header>
         </div>
 
@@ -103,7 +102,6 @@ export default function App() {
 
           <div className="stage-guide">
             <CylinderCarousel />
-            <span className="stage-number">01—{String(COURSE_COUNT).padStart(2, '0')}</span>
             <span className="stage-cross stage-cross--top">+</span>
             <span className="stage-cross stage-cross--bottom">+</span>
             <p>WHEEL TO BROWSE / CLICK TO OPEN</p>

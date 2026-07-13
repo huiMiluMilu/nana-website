@@ -56,6 +56,7 @@ const WORKS = [
 ];
 
 export default function WorksShowcase() {
+  const sectionRef = useRef(null);
   const trackRef = useRef(null);
   const dragRef = useRef({ active: false, startX: 0, scrollLeft: 0, moved: false });
   const scrollFrameRef = useRef(0);
@@ -73,6 +74,39 @@ export default function WorksShowcase() {
   };
 
   useEffect(() => () => cancelAnimationFrame(scrollFrameRef.current), []);
+
+  useEffect(() => {
+    let frameId = 0;
+
+    const updateParallax = () => {
+      frameId = 0;
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const distance = Math.max(0, Math.min(window.innerHeight, window.innerHeight - rect.top));
+      const progress = distance / Math.max(1, window.innerHeight);
+
+      section.style.setProperty('--works-title-y', `${(-progress * 112).toFixed(2)}px`);
+      section.style.setProperty('--works-copy-y', `${(-progress * 62).toFixed(2)}px`);
+      section.style.setProperty('--works-carousel-y', `${(-progress * 28).toFixed(2)}px`);
+      section.style.setProperty('--works-paper-y', `${(progress * 20).toFixed(2)}px`);
+    };
+
+    const requestUpdate = () => {
+      if (!frameId) frameId = requestAnimationFrame(updateParallax);
+    };
+
+    updateParallax();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
+    };
+  }, []);
 
   const updateActiveCard = () => {
     const track = trackRef.current;
@@ -130,7 +164,7 @@ export default function WorksShowcase() {
   };
 
   return (
-    <section className="works-showcase" id="works" aria-labelledby="works-title">
+    <section ref={sectionRef} className="works-showcase" id="works" aria-labelledby="works-title">
       <div className="paper-fibers" aria-hidden="true" />
 
       <header className="works-heading">

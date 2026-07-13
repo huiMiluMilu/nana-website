@@ -36,8 +36,6 @@ const COURSES = [
   { title: '7月6日 - 无穷鸡腿视频广告工作流拆解', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1795?sectionId=file-dQkvUWavw1nq&lessonId=course-EoXn52RV99cq', media: infiniteAdGif }
 ];
 
-export const COURSE_COUNT = COURSES.length;
-
 const CARD_RATIO = 16 / 10;
 const VISIBLE_CARD_LIMIT = 7;
 const PERSPECTIVE = 1350;
@@ -204,7 +202,7 @@ export default function CylinderCarousel() {
       lastWheelTimeRef.current = now;
 
       if (Math.abs(wheelAccumulatorRef.current) >= 42) {
-        moveCarousel(Math.sign(wheelAccumulatorRef.current));
+        moveCarousel(-Math.sign(wheelAccumulatorRef.current));
         hoveredLogicalRef.current = null;
         setHoveredCourse(null);
       }
