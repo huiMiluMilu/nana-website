@@ -1,78 +1,123 @@
+import { useEffect, useRef } from 'react';
+
 import SoftAurora from './components/SoftAurora';
 import CylinderCarousel, { COURSE_COUNT } from './components/CylinderCarousel';
+import WorksShowcase from './components/WorksShowcase';
 
 export default function App() {
+  const landingRef = useRef(null);
+
+  useEffect(() => {
+    let frameId = 0;
+
+    const updateParallax = () => {
+      frameId = 0;
+      const landing = landingRef.current;
+      if (!landing) return;
+
+      const rect = landing.getBoundingClientRect();
+      const distance = Math.max(0, Math.min(window.innerHeight, -rect.top));
+      const progress = distance / Math.max(1, window.innerHeight);
+
+      landing.style.setProperty('--copy-parallax-y', `${(-distance * 0.24).toFixed(2)}px`);
+      landing.style.setProperty('--card-parallax-y', `${(-distance * 0.1).toFixed(2)}px`);
+      landing.style.setProperty('--chrome-parallax-y', `${(-distance * 0.16).toFixed(2)}px`);
+      landing.style.setProperty('--aurora-parallax-y', `${(distance * 0.56).toFixed(2)}px`);
+      landing.style.setProperty('--landing-opacity', String(1 - progress * 0.48));
+    };
+
+    const requestUpdate = () => {
+      if (!frameId) frameId = requestAnimationFrame(updateParallax);
+    };
+
+    updateParallax();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
+    };
+  }, []);
+
   return (
     <main className="course-finder">
-      <div className="aurora-layer" aria-hidden="true">
-        <SoftAurora
-          speed={0.48}
-          scale={1.7}
-          brightness={0.92}
-          color1="#ff2f95"
-          color2="#5474ff"
-          noiseFrequency={2.25}
-          noiseAmplitude={0.92}
-          bandHeight={0.47}
-          bandSpread={1.45}
-          octaveDecay={0.18}
-          layerOffset={0.56}
-          colorSpeed={0.72}
-          mouseInfluence={0.16}
-        />
-      </div>
-
-      <div className="atmosphere" aria-hidden="true" />
-      <div className="grain" aria-hidden="true" />
-
-      <header className="topbar">
-        <a className="brand-mark" href="#top" aria-label="NaNa home">
-          <span className="brand-orbit" aria-hidden="true" />
-          NANA
-        </a>
-        <p className="section-index">01 / FIND COURSES</p>
-        <p className="location-mark">SHANGHAI / CN</p>
-      </header>
-
-      <section className="hero" id="top">
-        <div className="hero-copy">
-          <p className="eyebrow">
-            <span aria-hidden="true">✦</span>
-            Courses for image, sound &amp; motion
-          </p>
-
-          <h1>
-            <span>NaNa</span>
-            <span>Audiovisual</span>
-            <span>Art Creation</span>
-          </h1>
-
-          <div className="hero-footer">
-            <p className="intro">
-              Explore the relationship between what you see and what you hear.
-              Build your own art worlds.
-            </p>
-            <p className="scroll-cue">
-              <span className="scroll-line" aria-hidden="true" />
-              Scroll to discover
-            </p>
-          </div>
+      <section ref={landingRef} className="landing-chapter">
+        <div className="aurora-layer" aria-hidden="true">
+          <SoftAurora
+            speed={0.48}
+            scale={1.7}
+            brightness={0.92}
+            color1="#ff2f95"
+            color2="#5474ff"
+            noiseFrequency={2.25}
+            noiseAmplitude={0.92}
+            bandHeight={0.47}
+            bandSpread={1.45}
+            octaveDecay={0.18}
+            layerOffset={0.56}
+            colorSpeed={0.72}
+            mouseInfluence={0.16}
+          />
         </div>
 
-        <div className="stage-guide">
-          <CylinderCarousel />
-          <span className="stage-number">01—{String(COURSE_COUNT).padStart(2, '0')}</span>
-          <span className="stage-cross stage-cross--top">+</span>
-          <span className="stage-cross stage-cross--bottom">+</span>
-          <p>WHEEL TO BROWSE / CLICK TO OPEN</p>
+        <div className="atmosphere" aria-hidden="true" />
+        <div className="grain" aria-hidden="true" />
+
+        <div className="parallax-chrome">
+          <header className="topbar">
+            <a className="brand-mark" href="#top" aria-label="NaNa home">
+              <span className="brand-orbit" aria-hidden="true" />
+              NANA
+            </a>
+            <p className="section-index">01 / FIND COURSES</p>
+            <p className="location-mark">SHANGHAI / CN</p>
+          </header>
+        </div>
+
+        <section className="hero" id="top">
+          <div className="hero-copy">
+            <p className="eyebrow">
+              <span aria-hidden="true">✦</span>
+              Courses for image, sound &amp; motion
+            </p>
+
+            <h1>
+              <span>NaNa</span>
+              <span>Audiovisual</span>
+              <span>Art Creation</span>
+            </h1>
+
+            <div className="hero-footer">
+              <p className="intro">
+                Explore the relationship between what you see and what you hear.
+                Build your own art worlds.
+              </p>
+              <p className="scroll-cue">
+                <span className="scroll-line" aria-hidden="true" />
+                Scroll to discover
+              </p>
+            </div>
+          </div>
+
+          <div className="stage-guide">
+            <CylinderCarousel />
+            <span className="stage-number">01—{String(COURSE_COUNT).padStart(2, '0')}</span>
+            <span className="stage-cross stage-cross--top">+</span>
+            <span className="stage-cross stage-cross--bottom">+</span>
+            <p>WHEEL TO BROWSE / CLICK TO OPEN</p>
+          </div>
+        </section>
+
+        <div className="footer-rule" aria-hidden="true">
+          <span>VISUAL CULTURE</span>
+          <span>CREATIVE TECHNOLOGY</span>
+          <span>EXPERIMENTAL PRACTICE</span>
         </div>
       </section>
 
-      <div className="footer-rule" aria-hidden="true">
-        <span>VISUAL CULTURE</span>
-        <span>CREATIVE TECHNOLOGY</span>
-        <span>EXPERIMENTAL PRACTICE</span>
-      </div>
+      <WorksShowcase />
     </main>
   );
 }

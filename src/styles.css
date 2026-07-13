@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900&family=DM+Mono:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900&family=Cormorant+Garamond:ital,wght@0,400;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap');
 
 :root {
   color: #f4f1ed;
@@ -34,12 +34,25 @@ a {
 
 .course-finder {
   position: relative;
+  min-height: 200svh;
+  overflow-x: hidden;
+  isolation: isolate;
+  background: #050506;
+}
+
+.landing-chapter {
+  position: relative;
+  z-index: 1;
   min-height: 100svh;
   overflow: hidden;
-  isolation: isolate;
   background:
     radial-gradient(circle at 78% 18%, rgba(36, 64, 177, 0.11), transparent 28%),
     #050506;
+}
+
+.parallax-chrome {
+  transform: translate3d(0, var(--chrome-parallax-y, 0), 0);
+  will-change: transform;
 }
 
 .aurora-layer {
@@ -48,6 +61,8 @@ a {
   inset: 10% -8% -7%;
   opacity: 0;
   filter: saturate(1.24) contrast(1.08);
+  transform: translate3d(0, var(--aurora-parallax-y, 0), 0);
+  will-change: transform;
   animation: reveal-aurora 1.6s 0.25s ease-out forwards;
 }
 
@@ -134,6 +149,9 @@ a {
   z-index: 2;
   align-self: center;
   max-width: 760px;
+  opacity: var(--landing-opacity, 1);
+  transform: translate3d(0, var(--copy-parallax-y, 0), 0);
+  will-change: transform, opacity;
 }
 
 .eyebrow {
@@ -246,6 +264,8 @@ h1 span:nth-child(3) {
   margin-left: clamp(40px, 8vw, 150px);
   border-left: 1px solid rgba(244, 241, 237, 0.12);
   opacity: 0;
+  transform: translate3d(0, var(--card-parallax-y, 0), 0);
+  will-change: transform, opacity;
   animation: fade-in 1.2s 0.7s ease-out forwards;
 }
 
@@ -317,6 +337,8 @@ h1 span:nth-child(3) {
   color: rgba(244, 241, 237, 0.26);
   font-size: 7px;
   letter-spacing: 0.18em;
+  transform: translate3d(0, var(--chrome-parallax-y, 0), 0);
+  will-change: transform;
 }
 
 @keyframes reveal-aurora {
