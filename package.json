@@ -1,0 +1,23 @@
+{
+  "name": "nana-course-gallery",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "motion:studio": "remotion studio src/remotion/index.jsx",
+    "motion:render": "remotion render src/remotion/index.jsx"
+  },
+  "dependencies": {
+    "@remotion/cli": "latest",
+    "@vitejs/plugin-react": "latest",
+    "remotion": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "ogl": "latest"
+  },
+  "devDependencies": {}
+}
