@@ -193,6 +193,8 @@ export default function CylinderCarousel() {
     };
 
     const handleWheel = (event) => {
+      event.preventDefault();
+
       const now = Date.now();
       if (now - lastWheelTimeRef.current > 180) {
         wheelAccumulatorRef.current = 0;
@@ -202,7 +204,7 @@ export default function CylinderCarousel() {
       lastWheelTimeRef.current = now;
 
       if (Math.abs(wheelAccumulatorRef.current) >= 42) {
-        moveCarousel(-Math.sign(wheelAccumulatorRef.current));
+        moveCarousel(Math.sign(wheelAccumulatorRef.current));
         hoveredLogicalRef.current = null;
         setHoveredCourse(null);
       }
@@ -210,7 +212,7 @@ export default function CylinderCarousel() {
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.documentElement.addEventListener('mouseleave', handleMouseLeave);
-    container.addEventListener('wheel', handleWheel, { passive: true });
+    container.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
@@ -275,14 +277,14 @@ export default function CylinderCarousel() {
 
         if (absoluteOffset <= 1) {
           const t = smoothstep(absoluteOffset);
-          y = -sign * t * (metrics.cardH + gap);
+          y = sign * t * (metrics.cardH + gap);
           z = ACTIVE_CARD_Z + t * (220 - ACTIVE_CARD_Z);
           rotation = t * 86;
         } else {
           const t = smoothstep(Math.min(1, absoluteOffset - 1));
           const adjacentDistance = metrics.cardH + gap;
           const offscreenDistance = stageHeight / 2 + metrics.cardH * 0.78;
-          y = -sign * (adjacentDistance + t * (offscreenDistance - adjacentDistance));
+          y = sign * (adjacentDistance + t * (offscreenDistance - adjacentDistance));
           z = 220 + t * (-180 - 220);
           rotation = 86 + t * 3.5;
         }
@@ -304,7 +306,7 @@ export default function CylinderCarousel() {
         card.tabIndex = isActive ? 0 : -1;
         card.dataset.active = String(isActive);
         card.setAttribute('aria-hidden', isActive ? 'false' : 'true');
-        card.style.transform = `translate3d(0, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateX(${(-sign * rotation + tiltX).toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) rotateZ(-3deg)`;
+        card.style.transform = `translate3d(0, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateX(${(sign * rotation + tiltX).toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) rotateZ(-3deg)`;
       });
 
       const hitCard = mouse.clientX >= 0
