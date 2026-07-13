@@ -84,6 +84,7 @@ export default function CylinderCarousel() {
   const frameRef = useRef(0);
   const progressRef = useRef(0);
   const targetProgressRef = useRef(0);
+  const lastDirectionRef = useRef(1);
   const wheelAccumulatorRef = useRef(0);
   const lastWheelTimeRef = useRef(0);
   const hoverLockRef = useRef(false);
@@ -109,6 +110,7 @@ export default function CylinderCarousel() {
 
   const moveCarousel = (step) => {
     const destination = Math.round(targetProgressRef.current) + step;
+    lastDirectionRef.current = Math.sign(step) || lastDirectionRef.current;
     targetProgressRef.current = destination;
     setWindowCenter(destination);
     wheelAccumulatorRef.current = 0;
@@ -121,6 +123,7 @@ export default function CylinderCarousel() {
 
     if (Math.abs(logicalIndex - currentTarget) < 0.2) return false;
 
+    lastDirectionRef.current = Math.sign(logicalIndex - currentTarget) || lastDirectionRef.current;
     targetProgressRef.current = logicalIndex;
     setWindowCenter(logicalIndex);
     wheelAccumulatorRef.current = 0;
@@ -220,13 +223,25 @@ export default function CylinderCarousel() {
   useEffect(() => {
     const render = () => {
       progressRef.current += (targetProgressRef.current - progressRef.current) * 0.085;
+      const remainingDistance = targetProgressRef.current - progressRef.current;
+      const isMoving = Math.abs(remainingDistance) >= 0.0005;
 
-      const roundedIndex = Math.round(progressRef.current);
-      const distanceFromRest = progressRef.current - roundedIndex;
-      const magneticDistance = Math.sign(distanceFromRest)
-        * Math.pow(Math.abs(distanceFromRest) * 2, 4.2)
-        / 2;
-      const visualProgress = roundedIndex + magneticDistance;
+      if (!isMoving) progressRef.current = targetProgressRef.current;
+
+      const direction = isMoving ? Math.sign(remainingDistance) : lastDirectionRef.current;
+      if (isMoving) lastDirectionRef.current = direction;
+
+      const anchorIndex = direction > 0
+        ? Math.floor(progressRef.current)
+        : Math.ceil(progressRef.current);
+      const transitionPhase = isMoving
+        ? direction > 0
+          ? progressRef.current - anchorIndex
+          : anchorIndex - progressRef.current
+        : 0;
+      const smoothstep = (value) => value * value * (3 - 2 * value);
+      const leaveProgress = smoothstep(Math.min(1, transitionPhase / 0.44));
+      const enterProgress = smoothstep(Math.max(0, Math.min(1, (transitionPhase - 0.56) / 0.44)));
 
       const mouse = mouseRef.current;
       mouse.x += (mouse.targetX - mouse.x) * 0.075;
@@ -236,10 +251,23 @@ export default function CylinderCarousel() {
       cardRefs.current.forEach((card, logicalIndex) => {
         if (!card) return;
 
-        const offset = logicalIndex - visualProgress;
+        const baseOffset = logicalIndex - anchorIndex;
+        let offset;
+
+        if (!isMoving) {
+          offset = logicalIndex - Math.round(progressRef.current);
+        } else if (direction > 0) {
+          offset = baseOffset <= 0
+            ? baseOffset - leaveProgress
+            : baseOffset - enterProgress;
+        } else {
+          offset = baseOffset >= 0
+            ? baseOffset + leaveProgress
+            : baseOffset + enterProgress;
+        }
+
         const absoluteOffset = Math.abs(offset);
         const sign = Math.sign(offset);
-        const smoothstep = (value) => value * value * (3 - 2 * value);
         const gap = Math.max(36, metrics.cardH * 0.16);
         const peekAmount = Math.max(38, stageHeight * 0.055);
         const perspective = PERSPECTIVE;
