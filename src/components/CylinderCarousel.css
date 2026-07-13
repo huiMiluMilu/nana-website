@@ -235,10 +235,11 @@
 .course-hover-label {
   position: absolute;
   top: 50%;
-  right: calc(100% + clamp(22px, 4vw, 74px));
+  right: calc(100% + clamp(18px, 3.5vw, 58px));
   z-index: 4;
   display: grid;
-  width: clamp(210px, 19vw, 310px);
+  width: var(--label-width, 280px);
+  max-width: var(--label-width, 280px);
   min-height: 72px;
   place-items: center start;
   padding: 15px 20px;
@@ -275,17 +276,36 @@
 }
 
 .course-hover-label span {
+  min-width: 0;
   font-family: 'DM Mono', monospace;
   font-size: clamp(13px, 1vw, 17px);
   font-weight: 500;
   line-height: 1.55;
   letter-spacing: 0.015em;
+  overflow-wrap: anywhere;
   text-align: left;
+  text-wrap: balance;
+  white-space: normal;
 }
 
 .course-hover-label--visible {
   opacity: 1;
   transform: translate3d(0, -50%, 0);
+}
+
+.course-hover-label--compact {
+  top: auto;
+  right: auto;
+  bottom: 8px;
+  left: 50%;
+  width: min(180px, calc(100% - 24px));
+  max-width: min(180px, calc(100% - 24px));
+  min-height: 60px;
+  transform: translate3d(-50%, 10px, 0);
+}
+
+.course-hover-label--compact.course-hover-label--visible {
+  transform: translate3d(-50%, 0, 0);
 }
 
 @keyframes visual-orbit {
@@ -318,8 +338,6 @@
 
 @media (max-width: 1180px) {
   .course-hover-label {
-    right: calc(100% + 18px);
-    width: 210px;
     min-height: 66px;
   }
 }
@@ -331,6 +349,7 @@
     bottom: 8px;
     left: 50%;
     width: 180px;
+    max-width: 180px;
     min-height: 60px;
     transform: translate3d(-50%, 10px, 0);
   }

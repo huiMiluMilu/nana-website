@@ -49,8 +49,8 @@ export default function App() {
 
           <div className="hero-footer">
             <p className="intro">
-              Explore the language between what you see and what you hear.
-              Build your own moving worlds.
+              Explore the relationship between what you see and what you hear.
+              Build your own art worlds.
             </p>
             <p className="scroll-cue">
               <span className="scroll-line" aria-hidden="true" />

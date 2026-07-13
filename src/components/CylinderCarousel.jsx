@@ -92,8 +92,10 @@ export default function CylinderCarousel() {
   const hoverUnlockTimerRef = useRef(0);
   const autoplayDeadlineRef = useRef(0);
   const isPointerOverCardRef = useRef(false);
-  const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0 });
+  const hoveredLogicalRef = useRef(null);
+  const mouseRef = useRef({ x: 0, y: 0, targetX: 0, targetY: 0, clientX: -1, clientY: -1 });
   const [metrics, setMetrics] = useState({ cardW: 360, cardH: 225 });
+  const [labelLayout, setLabelLayout] = useState({ width: 280, compact: false });
   const [windowCenter, setWindowCenter] = useState(0);
   const [hoveredCourse, setHoveredCourse] = useState(null);
 
@@ -106,7 +108,7 @@ export default function CylinderCarousel() {
     window.clearTimeout(hoverUnlockTimerRef.current);
     hoverUnlockTimerRef.current = window.setTimeout(() => {
       hoverLockRef.current = false;
-    }, 650);
+    }, 950);
   };
 
   const moveCarousel = (step) => {
@@ -136,13 +138,22 @@ export default function CylinderCarousel() {
     if (!container) return undefined;
 
     const updateMetrics = () => {
-      const { width, height } = container.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      const { width, height } = containerRect;
       const projectedWidth = width * (width < 520 ? 0.82 : 0.84);
       const projectedHeight = height * (width < 520 ? 0.5 : 0.56);
       const widthFromStage = projectedWidth / ACTIVE_CARD_SCALE;
       const widthFromHeight = (projectedHeight * CARD_RATIO) / ACTIVE_CARD_SCALE;
       const cardW = Math.round(Math.max(150, Math.min(410, widthFromStage, widthFromHeight)));
+      const titleRight = document.querySelector('.hero-copy h1')?.getBoundingClientRect().right ?? 0;
+      const labelGap = Math.max(18, Math.min(58, window.innerWidth * 0.035));
+      const availableLabelWidth = Math.floor(containerRect.left - labelGap - titleRight - 20);
+
       setMetrics({ cardW, cardH: Math.round(cardW / CARD_RATIO) });
+      setLabelLayout({
+        width: Math.max(132, Math.min(280, availableLabelWidth)),
+        compact: availableLabelWidth < 132
+      });
     };
 
     updateMetrics();
@@ -168,11 +179,16 @@ export default function CylinderCarousel() {
       const y = ((event.clientY - rect.top) / rect.height) * 2 - 1;
       mouseRef.current.targetX = Math.max(-1, Math.min(1, x));
       mouseRef.current.targetY = Math.max(-1, Math.min(1, y));
+      mouseRef.current.clientX = event.clientX;
+      mouseRef.current.clientY = event.clientY;
     };
 
     const handleMouseLeave = () => {
       mouseRef.current.targetX = 0;
       mouseRef.current.targetY = 0;
+      mouseRef.current.clientX = -1;
+      mouseRef.current.clientY = -1;
+      hoveredLogicalRef.current = null;
       isPointerOverCardRef.current = false;
       resetAutoplayDeadline();
       setHoveredCourse(null);
@@ -189,6 +205,7 @@ export default function CylinderCarousel() {
 
       if (Math.abs(wheelAccumulatorRef.current) >= 42) {
         moveCarousel(Math.sign(wheelAccumulatorRef.current));
+        hoveredLogicalRef.current = null;
         setHoveredCourse(null);
       }
     };
@@ -292,6 +309,29 @@ export default function CylinderCarousel() {
         card.style.transform = `translate3d(0, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateX(${(-sign * rotation + tiltX).toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) rotateZ(-3deg)`;
       });
 
+      const hitCard = mouse.clientX >= 0
+        ? document.elementFromPoint(mouse.clientX, mouse.clientY)?.closest('.course-card')
+        : null;
+      const hitLogicalIndex = hitCard ? Number(hitCard.dataset.logicalIndex) : null;
+
+      if (hitLogicalIndex !== hoveredLogicalRef.current) {
+        if (!hitCard && hoverLockRef.current && hoveredLogicalRef.current !== null) {
+          frameRef.current = requestAnimationFrame(render);
+          return;
+        }
+
+        hoveredLogicalRef.current = hitLogicalIndex;
+        isPointerOverCardRef.current = Boolean(hitCard);
+
+        if (hitCard) {
+          resetAutoplayDeadline();
+          setHoveredCourse({ title: hitCard.dataset.courseTitle });
+          if (!hoverLockRef.current) centerCourse(hitLogicalIndex);
+        } else {
+          setHoveredCourse(null);
+        }
+      }
+
       frameRef.current = requestAnimationFrame(render);
     };
 
@@ -302,7 +342,8 @@ export default function CylinderCarousel() {
   return (
     <div ref={containerRef} className="cylinder-carousel" aria-label="Course carousel">
       <div
-        className={`course-hover-label${hoveredCourse ? ' course-hover-label--visible' : ''}`}
+        className={`course-hover-label${hoveredCourse ? ' course-hover-label--visible' : ''}${labelLayout.compact ? ' course-hover-label--compact' : ''}`}
+        style={{ '--label-width': `${labelLayout.width}px` }}
         aria-live="polite"
       >
         <span>{hoveredCourse?.title ?? ''}</span>
@@ -321,6 +362,8 @@ export default function CylinderCarousel() {
                 else cardRefs.current.delete(logicalIndex);
               }}
               className="course-card"
+              data-course-title={course.title}
+              data-logical-index={logicalIndex}
               href={course.href}
               target="_blank"
               rel="noreferrer"
@@ -338,22 +381,27 @@ export default function CylinderCarousel() {
                 if (course.href === '#') event.preventDefault();
               }}
               onMouseEnter={() => {
+                hoveredLogicalRef.current = logicalIndex;
                 isPointerOverCardRef.current = true;
                 resetAutoplayDeadline();
                 setHoveredCourse(course);
                 if (!hoverLockRef.current) centerCourse(logicalIndex);
               }}
               onMouseLeave={() => {
+                if (hoverLockRef.current) return;
+                hoveredLogicalRef.current = null;
                 isPointerOverCardRef.current = false;
                 resetAutoplayDeadline();
                 setHoveredCourse(null);
               }}
               onFocus={() => {
+                hoveredLogicalRef.current = logicalIndex;
                 isPointerOverCardRef.current = true;
                 resetAutoplayDeadline();
                 setHoveredCourse(course);
               }}
               onBlur={() => {
+                hoveredLogicalRef.current = null;
                 isPointerOverCardRef.current = false;
                 resetAutoplayDeadline();
                 setHoveredCourse(null);
