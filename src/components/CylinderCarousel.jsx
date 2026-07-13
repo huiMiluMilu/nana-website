@@ -55,7 +55,7 @@ function getVisibleCourses(centerIndex) {
   });
 }
 
-function CourseVisual({ theme, media, reverse = false }) {
+function CourseVisual({ theme, media }) {
   if (media) {
     return (
       <img
@@ -69,7 +69,7 @@ function CourseVisual({ theme, media, reverse = false }) {
   }
 
   return (
-    <div className={`course-visual course-visual--${theme}${reverse ? ' course-visual--reverse' : ''}`}>
+    <div className={`course-visual course-visual--${theme}`}>
       <span className="course-visual-grid" />
       <span className="course-visual-shape course-visual-shape--one" />
       <span className="course-visual-shape course-visual-shape--two" />
@@ -280,7 +280,7 @@ export default function CylinderCarousel() {
           const t = smoothstep(absoluteOffset);
           y = -sign * t * (metrics.cardH + gap);
           z = ACTIVE_CARD_Z + t * (220 - ACTIVE_CARD_Z);
-          rotation = t * 132;
+          rotation = t * 82;
         } else if (absoluteOffset <= 2) {
           const t = smoothstep(absoluteOffset - 1);
           const scaleAtEdge = perspective / (perspective + 60);
@@ -288,7 +288,7 @@ export default function CylinderCarousel() {
           const distance = metrics.cardH + gap + t * (yAtEdge - metrics.cardH - gap);
           y = -sign * distance;
           z = 220 + t * (-60 - 220);
-          rotation = 132 + t * (175 - 132);
+          rotation = 82 + t * (88.5 - 82);
         } else {
           const t = smoothstep(Math.min(1, absoluteOffset - 2));
           const scaleAtStart = perspective / (perspective + 60);
@@ -297,7 +297,7 @@ export default function CylinderCarousel() {
           const yAtEnd = (stageHeight / 2 + 100) / scaleAtEnd + metrics.cardH / 2;
           y = -sign * (yAtStart + t * (yAtEnd - yAtStart));
           z = -60 + t * (-250 + 60);
-          rotation = 175 + t * 20;
+          rotation = 88.5 + t * 1.4;
         }
 
         const centerFactor = Math.max(0, 1 - absoluteOffset);
@@ -386,9 +386,6 @@ export default function CylinderCarousel() {
               <span className="course-card-edge" />
               <span className="course-card-face course-card-face--front">
                 <CourseVisual theme={course.theme} media={course.media} />
-              </span>
-              <span className="course-card-face course-card-face--back">
-                <CourseVisual theme={course.theme} media={course.media} reverse />
               </span>
             </a>
           ))}

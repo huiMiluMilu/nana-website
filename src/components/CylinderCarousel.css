@@ -75,10 +75,6 @@
   transform: translateZ(2.2px);
 }
 
-.course-card-face--back {
-  transform: rotateX(180deg) translateZ(2.2px);
-}
-
 .course-card:hover .course-card-face,
 .course-card:focus-visible .course-card-face {
   filter: brightness(1.13) saturate(1.12);
@@ -136,11 +132,6 @@
     linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.34));
   transform: translateX(-85%);
   animation: visual-sweep 5.8s ease-in-out infinite;
-}
-
-.course-visual--reverse {
-  transform: scaleX(-1);
-  filter: hue-rotate(14deg) brightness(0.78);
 }
 
 .course-visual--orbit {
