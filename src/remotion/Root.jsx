@@ -19,7 +19,7 @@ const courseCards = [
   {id: 'VideoScriptDiagnosis', index: '12', title: '视频脚本诊断', accent: '#ff655d', type: 'diagnosis'},
   {id: 'VideoEmotionBasics', index: '13', title: '视频情绪基础', accent: '#b16cff', type: 'emotion'},
   {id: 'CameraMovePrompts', index: '14', title: '进阶运镜提示词\n+ 案例', accent: '#5fe5ff', type: 'camera'},
-  {id: 'InfiniteAdWorkflow', index: '15', title: '无穷动图广告\n工作流', accent: '#ff4f9b', type: 'infinity'},
+  {id: 'WuqiongAdWorkflow', index: '15', title: '「无穷」广告\n工作流', accent: '#ff4f9b', type: 'adflow'},
 ];
 
 export const RemotionRoot = () => {

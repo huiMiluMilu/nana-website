@@ -247,14 +247,57 @@ const CameraVisual = ({t, accent}) => {
   </div>;
 };
 
-const InfinityVisual = ({t, accent}) => {
-  const pos = (phase) => {
-    const a = (t + phase) * Math.PI * 2;
-    return {x: 380 + 265 * Math.cos(a), y: 330 + 150 * Math.sin(a) * Math.cos(a) * 2};
-  };
-  return <div style={{position: 'absolute', right: 8, top: 90, width: 780, height: 660}}>
-    <svg width="780" height="660" viewBox="0 0 780 660"><defs><linearGradient id="infinity-line" x1="0" x2="1"><stop stopColor="#ff4f9b"/><stop offset=".48" stopColor="#8d73ff"/><stop offset="1" stopColor="#59e7ff"/></linearGradient></defs><path d="M80 330 C80 85 350 125 390 330 C430 535 700 575 700 330 C700 85 430 125 390 330 C350 535 80 575 80 330Z" fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="42"/><path d="M80 330 C80 85 350 125 390 330 C430 535 700 575 700 330 C700 85 430 125 390 330 C350 535 80 575 80 330Z" fill="none" stroke="url(#infinity-line)" strokeWidth="8" strokeDasharray="180 1300" strokeDashoffset={-t * 1480} strokeLinecap="round"/></svg>
-    {[0, 0.333, 0.666].map((phase, i) => {const p = pos(phase); return <div key={phase} style={{position: 'absolute', left: p.x, top: p.y, width: i === 0 ? 150 : 112, height: i === 0 ? 190 : 145, translate: '-50% -50%', rotate: `${Math.sin((t + phase) * Math.PI * 2) * 16}deg`, borderRadius: 18, border: `2px solid ${i === 0 ? accent : 'rgba(255,255,255,.35)'}`, background: `linear-gradient(160deg, ${accent}${i === 0 ? '66' : '20'}, #080808 58%)`, boxShadow: i === 0 ? `0 0 40px ${accent}88` : 'none', display: 'grid', placeItems: 'center'}}><div style={{width: '55%', aspectRatio: 1, borderRadius: '50%', background: i === 0 ? accent : ink, boxShadow: `0 0 28px ${accent}`}} /></div>;})}
+const AdStageIcon = ({stage, accent, active}) => {
+  const stroke = active ? accent : 'rgba(245,242,236,.62)';
+  if (stage === 0) {
+    return <div style={{width: 78, display: 'flex', flexDirection: 'column', gap: 12}}>
+      {[1, 0.72, 0.88].map((width, i) => <div key={i} style={{width: `${width * 100}%`, height: 8, borderRadius: 8, background: stroke, boxShadow: active ? `0 0 14px ${accent}` : 'none'}} />)}
+    </div>;
+  }
+  if (stage === 1) {
+    return <div style={{position: 'relative', width: 94, height: 72, border: `4px solid ${stroke}`, borderRadius: 8}}>
+      <div style={{position: 'absolute', left: 15, top: 13, width: 25, height: 25, borderRadius: '50%', background: accent, boxShadow: `0 0 18px ${accent}`}} />
+      <div style={{position: 'absolute', left: 11, right: 11, bottom: 10, height: 22, clipPath: 'polygon(0 100%, 34% 25%, 55% 75%, 76% 40%, 100% 100%)', background: stroke}} />
+    </div>;
+  }
+  if (stage === 2) {
+    return <div style={{position: 'relative', width: 100, height: 78}}>
+      <div style={{position: 'absolute', left: 0, top: 5, width: 44, height: 44, clipPath: 'polygon(12% 0, 100% 50%, 12% 100%)', background: accent, filter: active ? `drop-shadow(0 0 12px ${accent})` : 'none'}} />
+      {[0, 1, 2].map((i) => <div key={i} style={{position: 'absolute', left: 0, bottom: i * 12, width: 100 - i * 20, height: 6, borderRadius: 6, background: stroke}} />)}
+    </div>;
+  }
+  return <div style={{position: 'relative', width: 92, height: 92}}>
+    <div style={{position: 'absolute', left: 42, top: 5, width: 9, height: 68, borderRadius: 9, background: stroke, boxShadow: active ? `0 0 16px ${accent}` : 'none'}} />
+    <div style={{position: 'absolute', left: 23, top: 2, width: 46, height: 46, borderLeft: `9px solid ${stroke}`, borderTop: `9px solid ${stroke}`, rotate: '45deg'}} />
+    <div style={{position: 'absolute', left: 10, right: 10, bottom: 2, height: 9, borderRadius: 9, background: accent}} />
+  </div>;
+};
+
+const AdWorkflowVisual = ({t, accent}) => {
+  const active = Math.floor(t * 4) % 4;
+  const labels = ['需求', '视觉', '剪辑', '发布'];
+  const positions = [
+    {left: 22, top: 225},
+    {left: 202, top: 78},
+    {left: 382, top: 225},
+    {left: 562, top: 78},
+  ];
+  return <div style={{position: 'absolute', right: 8, top: 92, width: 780, height: 660}}>
+    <svg width="780" height="660" viewBox="0 0 780 660">
+      <defs><linearGradient id="ad-flow-line" x1="0" x2="1"><stop stopColor="#ff4f9b"/><stop offset=".52" stopColor="#8d73ff"/><stop offset="1" stopColor="#59e7ff"/></linearGradient></defs>
+      <path d="M102 335 L282 188 L462 335 L642 188" fill="none" stroke="rgba(255,255,255,.13)" strokeWidth="5" strokeDasharray="14 14" />
+      <path d="M102 335 L282 188 L462 335 L642 188" fill="none" stroke="url(#ad-flow-line)" strokeWidth="10" strokeDasharray="115 900" strokeDashoffset={-t * 960} strokeLinecap="round" />
+      {[{x: 102, y: 335}, {x: 282, y: 188}, {x: 462, y: 335}, {x: 642, y: 188}].map((point, i) => <circle key={i} cx={point.x} cy={point.y} r={i === active ? 14 : 7} fill={i === active ? accent : ink} style={{filter: i === active ? `drop-shadow(0 0 14px ${accent})` : 'none'}} />)}
+    </svg>
+    {positions.map((position, i) => {
+      const selected = i === active;
+      return <div key={i} style={{position: 'absolute', ...position, width: 160, height: 218, borderRadius: 22, border: `2px solid ${selected ? accent : 'rgba(255,255,255,.2)'}`, background: selected ? `linear-gradient(160deg, ${accent}55, rgba(5,5,5,.96) 58%)` : 'rgba(255,255,255,.035)', boxShadow: selected ? `0 0 42px ${accent}77` : 'none', scale: selected ? '1.12' : '0.9', translate: `0 ${Math.sin(t * Math.PI * 2 + i) * 12}px`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', padding: '22px 16px 24px'}}>
+        <div style={{alignSelf: 'flex-start', color: selected ? accent : 'rgba(255,255,255,.38)', fontFamily: mono, fontSize: 18, fontWeight: 800}}>{String(i + 1).padStart(2, '0')}</div>
+        <AdStageIcon stage={i} accent={accent} active={selected} />
+        <div style={{fontSize: 30, fontWeight: 900, color: selected ? ink : 'rgba(245,242,236,.46)'}}>{labels[i]}</div>
+      </div>;
+    })}
+    <div style={{position: 'absolute', left: 0, right: 0, bottom: 32, textAlign: 'center', color: accent, fontSize: 64, fontWeight: 900, letterSpacing: '-0.06em', textShadow: `0 0 28px ${accent}`}}>{labels[active]}</div>
   </div>;
 };
 
@@ -269,7 +312,7 @@ const visualByType = {
   diagnosis: DiagnosisVisual,
   emotion: EmotionVisual,
   camera: CameraVisual,
-  infinity: InfinityVisual,
+  adflow: AdWorkflowVisual,
 };
 
 export const CourseSetDemo = ({index, title, accent, type}) => {
