@@ -1,39 +1,39 @@
 import { useEffect, useRef, useState } from 'react';
 
 import './CylinderCarousel.css';
-import promptSystemGif from '../../output/gifs/01-prompt-system.gif';
-import continuityGif from '../../output/gifs/02-continuity.gif';
-import emotionColorGif from '../../output/gifs/03-emotion-color.gif';
-import eastWestGif from '../../output/gifs/04-east-west.gif';
-import shotCameraGif from '../../output/gifs/05-shot-camera.gif';
-import perspectiveFocalGif from '../../output/gifs/06-perspective-focal.gif';
-import lightColorGif from '../../output/gifs/07-light-color.gif';
-import wanWorkflowGif from '../../output/gifs/08-wan-workflow.gif';
-import consistencyGif from '../../output/gifs/09-consistency.gif';
-import pradaQueenGif from '../../output/gifs/10-prada-queen.gif';
-import videoElementsGif from '../../output/gifs/11-video-elements.gif';
-import scriptDiagnosisGif from '../../output/gifs/12-script-diagnosis.gif';
-import videoEmotionGif from '../../output/gifs/13-video-emotion.gif';
-import cameraMovesGif from '../../output/gifs/14-camera-moves.gif';
-import infiniteAdGif from '../../output/gifs/15-infinite-ad.gif';
+import promptSystemVideo from '../../output/videos/01-prompt-system.mp4';
+import continuityVideo from '../../output/videos/02-continuity.mp4';
+import emotionColorVideo from '../../output/videos/03-emotion-color.mp4';
+import eastWestVideo from '../../output/videos/04-east-west.mp4';
+import shotCameraVideo from '../../output/videos/05-shot-camera.mp4';
+import perspectiveFocalVideo from '../../output/videos/06-perspective-focal.mp4';
+import lightColorVideo from '../../output/videos/07-light-color.mp4';
+import wanWorkflowVideo from '../../output/videos/08-wan-workflow.mp4';
+import consistencyVideo from '../../output/videos/09-consistency.mp4';
+import pradaQueenVideo from '../../output/videos/10-prada-queen.mp4';
+import videoElementsVideo from '../../output/videos/11-video-elements.mp4';
+import scriptDiagnosisVideo from '../../output/videos/12-script-diagnosis.mp4';
+import videoEmotionVideo from '../../output/videos/13-video-emotion.mp4';
+import cameraMovesVideo from '../../output/videos/14-camera-moves.mp4';
+import infiniteAdVideo from '../../output/videos/15-infinite-ad.mp4';
 
 // Replace `href` and `title` here when the final course pages are ready.
 const COURSES = [
-  { title: '3月9日 - 六维结构提示词', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/752?sectionId=file-Ofq54HFmRjPs&lessonId=course-AEqWjFz1xBaC', media: promptSystemGif },
-  { title: '3月16日 - 稳定出图与“图像动作连续性”', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/750?sectionId=file-xHS66Qk5iWnm&lessonId=course-wBHQHyogzE6E', media: continuityGif },
-  { title: '3月30日 - 情绪的色彩心理学', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/751?sectionId=file-tcAghI2_bzjn&lessonId=course-SiGdANx6sCxG', media: emotionColorGif },
-  { title: '4月8日 - 中西艺术风格对比：材质·光影·构图', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/844?sectionId=file-uxHBukxYqcbF&lessonId=course-kO-OpVegf8T1', media: eastWestGif },
-  { title: '4月13日 - 景别、机位与构图', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/915?sectionId=file-uw215zv6EIfR&lessonId=course-_g4Juy_ejcsK', media: shotCameraGif },
-  { title: '4月20日 - 视角与焦段', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1133?sectionId=file-N7rTLBX_zgcA&lessonId=course-vkBQfrGVXh5z', media: perspectiveFocalGif },
-  { title: '5月11日 - 进阶光色系统', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1151?sectionId=file-C1Qm6Z5Q_a1q&lessonId=course-Kea9BvNMsBfB', media: lightColorGif },
-  { title: '5月18日 - WAN 2.7项目拆解：完整工作流与注意事项', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1261?sectionId=file-qpAV5DM2DLJv&lessonId=course-3ECL8Ex2IXz8', media: wanWorkflowGif },
-  { title: '5月25日 - 一致性系统', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1264?sectionId=file-VZziroYHstEG&lessonId=course-DlAWYRvwiw56', media: consistencyGif },
-  { title: '6月1日 - 穿Prada的女王系列作品工作流分享', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1263?sectionId=file-x1YHg0_SRvnd&lessonId=course-wCvrCbT6mLOm', media: pradaQueenGif },
-  { title: '6月9日 - 视频三要素', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1350?sectionId=file-hR3FQfPpMyMu&lessonId=course-n_hAKFSdUJgq', media: videoElementsGif },
-  { title: '6月15日 - 视频崩坏诊断', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1366?sectionId=file-a_Br1G3aEQzC&lessonId=course-mgbYfMs7B9F3', media: scriptDiagnosisGif },
-  { title: '6月22日 - 视频运镜基础', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1651?sectionId=file-xzHG9azNbRr8&lessonId=course-xkhewS509rLR', media: videoEmotionGif },
-  { title: '6月29日 - 进阶运镜提示词＋案例分享', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1734?sectionId=file-ZE8dmzE3PEsE&lessonId=course-ZE0C_-y1oSFh', media: cameraMovesGif },
-  { title: '7月6日 - 无穷鸡腿视频广告工作流拆解', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1795?sectionId=file-dQkvUWavw1nq&lessonId=course-EoXn52RV99cq', media: infiniteAdGif }
+  { title: '3月9日 - 六维结构提示词', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/752?sectionId=file-Ofq54HFmRjPs&lessonId=course-AEqWjFz1xBaC', media: promptSystemVideo },
+  { title: '3月16日 - 稳定出图与“图像动作连续性”', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/750?sectionId=file-xHS66Qk5iWnm&lessonId=course-wBHQHyogzE6E', media: continuityVideo },
+  { title: '3月30日 - 情绪的色彩心理学', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/751?sectionId=file-tcAghI2_bzjn&lessonId=course-SiGdANx6sCxG', media: emotionColorVideo },
+  { title: '4月8日 - 中西艺术风格对比：材质·光影·构图', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/844?sectionId=file-uxHBukxYqcbF&lessonId=course-kO-OpVegf8T1', media: eastWestVideo },
+  { title: '4月13日 - 景别、机位与构图', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/915?sectionId=file-uw215zv6EIfR&lessonId=course-_g4Juy_ejcsK', media: shotCameraVideo },
+  { title: '4月20日 - 视角与焦段', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1133?sectionId=file-N7rTLBX_zgcA&lessonId=course-vkBQfrGVXh5z', media: perspectiveFocalVideo },
+  { title: '5月11日 - 进阶光色系统', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1151?sectionId=file-C1Qm6Z5Q_a1q&lessonId=course-Kea9BvNMsBfB', media: lightColorVideo },
+  { title: '5月18日 - WAN 2.7项目拆解：完整工作流与注意事项', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1261?sectionId=file-qpAV5DM2DLJv&lessonId=course-3ECL8Ex2IXz8', media: wanWorkflowVideo },
+  { title: '5月25日 - 一致性系统', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1264?sectionId=file-VZziroYHstEG&lessonId=course-DlAWYRvwiw56', media: consistencyVideo },
+  { title: '6月1日 - 穿Prada的女王系列作品工作流分享', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1263?sectionId=file-x1YHg0_SRvnd&lessonId=course-wCvrCbT6mLOm', media: pradaQueenVideo },
+  { title: '6月9日 - 视频三要素', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1350?sectionId=file-hR3FQfPpMyMu&lessonId=course-n_hAKFSdUJgq', media: videoElementsVideo },
+  { title: '6月15日 - 视频崩坏诊断', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1366?sectionId=file-a_Br1G3aEQzC&lessonId=course-mgbYfMs7B9F3', media: scriptDiagnosisVideo },
+  { title: '6月22日 - 视频运镜基础', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1651?sectionId=file-xzHG9azNbRr8&lessonId=course-xkhewS509rLR', media: videoEmotionVideo },
+  { title: '6月29日 - 进阶运镜提示词＋案例分享', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1734?sectionId=file-ZE8dmzE3PEsE&lessonId=course-ZE0C_-y1oSFh', media: cameraMovesVideo },
+  { title: '7月6日 - 无穷鸡腿视频广告工作流拆解', href: 'https://groups.forchangeai.com/detail/28/teaching-material/video/1795?sectionId=file-dQkvUWavw1nq&lessonId=course-EoXn52RV99cq', media: infiniteAdVideo }
 ];
 
 const CARD_RATIO = 16 / 10;
@@ -56,12 +56,15 @@ function getVisibleCourses(centerIndex) {
 function CourseVisual({ theme, media }) {
   if (media) {
     return (
-      <img
+      <video
         className="course-card-media"
         src={media}
-        alt=""
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
         aria-hidden="true"
-        draggable="false"
       />
     );
   }
