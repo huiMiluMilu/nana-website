@@ -266,6 +266,7 @@ export default function CylinderCarousel() {
       mouse.y += (mouse.targetY - mouse.y) * 0.075;
 
       const stageHeight = containerRef.current?.clientHeight ?? window.innerHeight;
+      const showEdgeCards = window.innerWidth >= 1200 && stageHeight >= 600;
       cardRefs.current.forEach((card, logicalIndex) => {
         if (!card) return;
 
@@ -283,13 +284,30 @@ export default function CylinderCarousel() {
           y = sign * t * (metrics.cardH + gap);
           z = ACTIVE_CARD_Z + t * (220 - ACTIVE_CARD_Z);
           rotation = t * 86;
-        } else {
+        } else if (absoluteOffset <= 2) {
           const t = smoothstep(Math.min(1, absoluteOffset - 1));
           const adjacentDistance = metrics.cardH + gap;
-          const offscreenDistance = stageHeight / 2 + metrics.cardH * 0.78;
-          y = sign * (adjacentDistance + t * (offscreenDistance - adjacentDistance));
-          z = 220 + t * (-180 - 220);
-          rotation = 86 + t * 3.5;
+          const edgeZ = showEdgeCards ? -60 : -180;
+          const edgeScale = PERSPECTIVE / (PERSPECTIVE - edgeZ);
+          const edgeDistance = showEdgeCards
+            ? (stageHeight / 2 + 55) / edgeScale - metrics.cardH / 2
+            : stageHeight / 2 + metrics.cardH * 0.78;
+
+          y = sign * (adjacentDistance + t * (edgeDistance - adjacentDistance));
+          z = 220 + t * (edgeZ - 220);
+          rotation = 86 + t * (showEdgeCards ? 2.5 : 3.5);
+        } else {
+          const t = smoothstep(Math.min(1, absoluteOffset - 2));
+          const edgeZ = -60;
+          const edgeScale = PERSPECTIVE / (PERSPECTIVE - edgeZ);
+          const edgeDistance = (stageHeight / 2 + 55) / edgeScale - metrics.cardH / 2;
+          const offscreenZ = -180;
+          const offscreenScale = PERSPECTIVE / (PERSPECTIVE - offscreenZ);
+          const offscreenDistance = (stageHeight / 2 + 100) / offscreenScale + metrics.cardH / 2;
+
+          y = sign * (edgeDistance + t * (offscreenDistance - edgeDistance));
+          z = edgeZ + t * (offscreenZ - edgeZ);
+          rotation = 88.5 + t;
         }
 
         const centerFactor = Math.max(0, 1 - absoluteOffset);
@@ -298,11 +316,12 @@ export default function CylinderCarousel() {
         const isActive = absoluteOffset < 0.42;
         const isInteractive = absoluteOffset < 1.38;
 
-        const queueOpacity = absoluteOffset <= 1
+        const solidQueueLimit = showEdgeCards ? 2 : 1;
+        const queueOpacity = absoluteOffset <= solidQueueLimit
           ? 1
-          : Math.max(0, 1 - (absoluteOffset - 1) / 0.58);
+          : Math.max(0, 1 - (absoluteOffset - solidQueueLimit) / 0.58);
 
-        card.style.visibility = absoluteOffset > 1.58 ? 'hidden' : 'visible';
+        card.style.visibility = absoluteOffset > solidQueueLimit + 0.58 ? 'hidden' : 'visible';
         card.style.zIndex = String(Math.round(z + 500));
         card.style.opacity = String(queueOpacity);
         card.style.pointerEvents = isInteractive ? 'auto' : 'none';
