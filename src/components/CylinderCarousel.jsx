@@ -429,7 +429,6 @@ export default function CylinderCarousel() {
                 setHoveredCourse(null);
               }}
             >
-              <span className="course-card-edge" />
               <span className="course-card-face course-card-face--front">
                 <CourseVisual theme={course.theme} media={course.media} />
               </span>
