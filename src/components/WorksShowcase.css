@@ -3,24 +3,13 @@
   z-index: 6;
   min-height: 112svh;
   padding: clamp(92px, 12vw, 170px) 0 clamp(72px, 9vw, 130px);
+  clip-path: polygon(0 50px, 2% 38px, 5% 50px, 8% 28px, 11% 46px, 15% 34px, 18% 53px, 22% 32px, 26% 47px, 30% 22px, 34% 49px, 38% 35px, 42% 55px, 47% 29px, 51% 47px, 56% 25px, 61% 52px, 66% 33px, 71% 48px, 76% 29px, 82% 52px, 87% 31px, 92% 47px, 96% 27px, 100% 44px, 100% 100%, 0 100%);
   color: #2c2118;
   background:
     radial-gradient(circle at 18% 24%, rgba(255, 247, 218, 0.72), transparent 30%),
     radial-gradient(circle at 78% 64%, rgba(116, 72, 34, 0.13), transparent 34%),
     linear-gradient(112deg, #d8c39d, #cbb184 54%, #ddcba8);
   box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.62);
-}
-
-.works-showcase::before {
-  position: absolute;
-  top: -62px;
-  right: 0;
-  left: 0;
-  height: 82px;
-  content: '';
-  background: linear-gradient(112deg, #d8c39d, #cbb184 54%, #ddcba8);
-  clip-path: polygon(0 57%, 2% 43%, 5% 56%, 8% 31%, 11% 52%, 15% 39%, 18% 60%, 22% 36%, 26% 51%, 30% 25%, 34% 55%, 38% 41%, 42% 62%, 47% 33%, 51% 51%, 56% 29%, 61% 58%, 66% 38%, 71% 55%, 76% 32%, 82% 60%, 87% 36%, 92% 52%, 96% 31%, 100% 49%, 100% 100%, 0 100%);
-  filter: drop-shadow(0 -10px 12px rgba(0, 0, 0, 0.28));
 }
 
 .paper-fibers {
