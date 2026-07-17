@@ -330,6 +330,45 @@ h1 span:nth-child(3) {
   will-change: transform;
 }
 
+.page-scroll-arrow {
+  position: absolute;
+  z-index: 3;
+  bottom: 9px;
+  left: 50%;
+  display: grid;
+  width: 18px;
+  height: 22px;
+  place-items: center;
+  color: var(--acid);
+  text-decoration: none;
+  transform: translateX(-50%);
+}
+
+.page-scroll-arrow::before {
+  width: 1px;
+  height: 10px;
+  content: '';
+  background: currentColor;
+  box-shadow: 0 0 10px rgba(215, 255, 69, 0.48);
+  animation: arrow-drift 1.8s ease-in-out infinite;
+}
+
+.page-scroll-arrow span {
+  position: absolute;
+  bottom: 1px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.page-scroll-arrow:hover,
+.page-scroll-arrow:focus-visible {
+  color: var(--ink);
+  outline: none;
+}
+
 @keyframes reveal-aurora {
   to { opacity: 1; }
 }
@@ -366,6 +405,11 @@ h1 span:nth-child(3) {
 @keyframes scroll-pulse {
   from { transform: translateY(-110%); }
   to { transform: translateY(210%); }
+}
+
+@keyframes arrow-drift {
+  0%, 100% { transform: translateY(-2px); opacity: 0.5; }
+  50% { transform: translateY(2px); opacity: 1; }
 }
 
 @keyframes grain-shift {

@@ -108,6 +108,10 @@ export default function App() {
           </div>
         </section>
 
+        <a className="page-scroll-arrow" href="#works" aria-label="Scroll to selected works">
+          <span aria-hidden="true" />
+        </a>
+
         <div className="footer-rule" aria-hidden="true">
           <span>VISUAL CULTURE</span>
           <span>CREATIVE TECHNOLOGY</span>
