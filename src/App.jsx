@@ -24,6 +24,8 @@ export default function App() {
       landing.style.setProperty('--chrome-parallax-y', `${(-distance * 0.16).toFixed(2)}px`);
       landing.style.setProperty('--aurora-parallax-y', `${(distance * 0.56).toFixed(2)}px`);
       landing.style.setProperty('--landing-opacity', String(1 - progress * 0.48));
+      landing.style.setProperty('--scroll-arrow-opacity', String(Math.max(0, 1 - progress * 1.5)));
+      landing.style.setProperty('--scroll-arrow-events', progress > 0.65 ? 'none' : 'auto');
     };
 
     const requestUpdate = () => {

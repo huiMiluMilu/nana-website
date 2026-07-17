@@ -331,41 +331,47 @@ h1 span:nth-child(3) {
 }
 
 .page-scroll-arrow {
-  position: absolute;
+  position: fixed;
   z-index: 3;
-  bottom: 9px;
+  bottom: max(14px, env(safe-area-inset-bottom));
   left: 50%;
   display: grid;
-  width: 18px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   place-items: center;
-  color: var(--acid);
+  border: 1px solid rgba(215, 255, 69, 0.72);
+  border-radius: 50%;
+  color: rgba(215, 255, 69, 0.96);
+  opacity: var(--scroll-arrow-opacity, 1);
+  pointer-events: var(--scroll-arrow-events, auto);
   text-decoration: none;
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotate(45deg);
+  transition: opacity 180ms ease, border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
 }
 
 .page-scroll-arrow::before {
-  width: 1px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   content: '';
-  background: currentColor;
-  box-shadow: 0 0 10px rgba(215, 255, 69, 0.48);
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translate(-2px, -2px);
   animation: arrow-drift 1.8s ease-in-out infinite;
 }
 
 .page-scroll-arrow span {
   position: absolute;
-  bottom: 1px;
-  width: 7px;
-  height: 7px;
-  border-right: 1px solid currentColor;
-  border-bottom: 1px solid currentColor;
-  transform: rotate(45deg);
+  width: 1px;
+  height: 10px;
+  background: currentColor;
+  transform: rotate(-45deg) translateY(-1px);
 }
 
 .page-scroll-arrow:hover,
 .page-scroll-arrow:focus-visible {
   color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 0 0 18px rgba(215, 255, 69, 0.36);
   outline: none;
 }
 
@@ -408,8 +414,8 @@ h1 span:nth-child(3) {
 }
 
 @keyframes arrow-drift {
-  0%, 100% { transform: translateY(-2px); opacity: 0.5; }
-  50% { transform: translateY(2px); opacity: 1; }
+  0%, 100% { transform: translate(-3px, -3px); opacity: 0.55; }
+  50% { transform: translate(1px, 1px); opacity: 1; }
 }
 
 @keyframes grain-shift {
