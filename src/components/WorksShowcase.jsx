@@ -90,7 +90,7 @@ export default function WorksShowcase() {
       section.style.setProperty('--works-title-y', `${(-progress * 112).toFixed(2)}px`);
       section.style.setProperty('--works-copy-y', `${(-progress * 62).toFixed(2)}px`);
       section.style.setProperty('--works-carousel-y', `${(-progress * 28).toFixed(2)}px`);
-      section.style.setProperty('--works-paper-y', `${(progress * 20).toFixed(2)}px`);
+      section.style.setProperty('--works-glow-y', `${(progress * 24).toFixed(2)}px`);
     };
 
     const requestUpdate = () => {
@@ -165,12 +165,19 @@ export default function WorksShowcase() {
 
   return (
     <section ref={sectionRef} className="works-showcase" id="works" aria-labelledby="works-title">
-      <div className="paper-fibers" aria-hidden="true" />
+      <div className="works-divider" aria-hidden="true">
+        <div className="works-divider-track">
+          <span>SELECTED WORKS · SOULFUL POETIC · VISUAL ARCHIVE · </span>
+          <span>SELECTED WORKS · SOULFUL POETIC · VISUAL ARCHIVE · </span>
+        </div>
+        <span className="works-divider-pulse" />
+      </div>
+      <div className="works-atmosphere" aria-hidden="true" />
 
       <header className="works-heading">
         <div>
           <p className="works-kicker">02 / SELECTED WORKS · RED NOTEBOOK</p>
-          <h2 id="works-title">Soulful<br />Poetic</h2>
+          <h2 id="works-title"><span>Soulful</span><span>Poetic</span></h2>
         </div>
 
         <div className="works-profile-copy">
