@@ -3,54 +3,55 @@ import { useEffect, useRef, useState } from 'react';
 import './WorksShowcase.css';
 
 const PROFILE_URL = 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2?xsec_token=ABT6NgZOHLDoQctZ595n6TEKQuRYIUcL3M68IWk43MxVs%3D&xsec_source=pc_search';
+const PUBLIC_BASE = import.meta.env.BASE_URL;
 
 const WORKS = [
   {
     title: '我的 Chinoiserie｜古山传情',
     likes: '6433',
-    image: '/works/01-chinoiserie.webp',
+    image: `${PUBLIC_BASE}works/01-chinoiserie.webp`,
     href: 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2/697e40de0000000021028bdb?xsec_token=ABr3sSnfGjRR9wCQj55KioGJlVfO3WsHJ_yNw4fKlPwCg=&xsec_source=pc_user'
   },
   {
     title: '准备好，介入你的专属脑内视觉库了吗？',
     likes: '9401',
-    image: '/works/02-visual-library.webp',
+    image: `${PUBLIC_BASE}works/02-visual-library.webp`,
     href: 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2/69cdf20c000000001a0246a1?xsec_token=ABr8J10OvSGoYx2fgmIniWctp0ZccJtf0WOI1iZ2KRY64=&xsec_source=pc_user'
   },
   {
     title: '80年代复古日漫风小尝试《街头猎人》',
     likes: '85',
-    image: '/works/03-street-hunter.webp',
+    image: `${PUBLIC_BASE}works/03-street-hunter.webp`,
     href: 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2/6925af61000000001b02553f?xsec_token=AB9J6c8tpiOFKModj1fbWyEl7l7I7xgPL8idfbJuAo43E=&xsec_source=pc_user'
   },
   {
     title: '以彝族为灵感的探索',
     likes: '2037',
-    image: '/works/04-yi-inspiration.webp',
+    image: `${PUBLIC_BASE}works/04-yi-inspiration.webp`,
     href: 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2/692430f7000000001e023f69?xsec_token=AB35girJqsqskcHd6YoPU5lkGrWghjBRqXAT76kvhjVxo=&xsec_source=pc_user'
   },
   {
     title: 'Sanctuary Codex 037｜技术与有机的视觉博弈',
     likes: '355',
-    image: '/works/05-sanctuary-037.webp',
+    image: `${PUBLIC_BASE}works/05-sanctuary-037.webp`,
     href: 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2/6920876b000000001f00c67f?xsec_token=AB050MUcqdDftDRFMf3yb72YCCg8GsTlGzKEwRHE1WjcY=&xsec_source=pc_user'
   },
   {
     title: '给我的星星们准备的星光大赏邀请函',
     likes: '44',
-    image: '/works/06-starlight-invitation.webp',
+    image: `${PUBLIC_BASE}works/06-starlight-invitation.webp`,
     href: 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2/69202dcd000000000d03e100?xsec_token=AB050MUcqdDftDRFMf3yb72UUYwNCgnRSU48PUCNOvcPQ=&xsec_source=pc_user'
   },
   {
     title: '以 Hmong 苗为灵感的探索',
     likes: '4682',
-    image: '/works/07-hmong-inspiration.webp',
+    image: `${PUBLIC_BASE}works/07-hmong-inspiration.webp`,
     href: 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2/69176c730000000004029e04?xsec_token=ABZ2Iai_PXMylOdbKtA_xROk-HlrKpTwWHfiY3vpuKjXA=&xsec_source=pc_user'
   },
   {
     title: '腾讯视频获奖 AI 短片《同步失衡》',
     likes: '1205',
-    image: '/works/08-sync-imbalance.webp',
+    image: `${PUBLIC_BASE}works/08-sync-imbalance.webp`,
     href: 'https://www.xiaohongshu.com/user/profile/550c7316d39ea2522bf6bbe2/690d6ea1000000000402b40f?xsec_token=ABtCe2A5ht5P9IpKCfIsZs9mDNYd7aIU7l9LE_y27AyXk=&xsec_source=pc_user'
   }
 ];

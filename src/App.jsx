@@ -70,7 +70,7 @@ export default function App() {
         <div className="parallax-chrome">
           <header className="topbar">
             <a className="brand-mark" href="#top" aria-label="NaNa home">
-              <img src="/brand/fengbian-horizontal-cn.png" alt="风变" />
+              <img src={`${import.meta.env.BASE_URL}brand/fengbian-horizontal-cn.png`} alt="风变" />
             </a>
             <p className="section-index">01 / FIND COURSES</p>
             <p className="location-mark">Soulful Poetic</p>

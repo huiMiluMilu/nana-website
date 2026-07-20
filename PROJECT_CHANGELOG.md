@@ -1,6 +1,6 @@
 # NaNa 课程网站项目更新日志
 
-最后更新：2026-07-20 21:24（Asia/Shanghai）
+最后更新：2026-07-20 21:31（Asia/Shanghai）
 
 这份文档记录本项目的功能操作、素材变更、验证结果、Git 保存和部署情况。历史内容依据当前项目对话与 Git 提交记录整理；首次 Git 提交以前的操作没有独立提交号，因此按开发阶段归纳。
 
@@ -20,7 +20,7 @@
 - 当前分支：`main`
 - GitHub：`https://github.com/huiMiluMilu/nana-website.git`
 - 本地开发预览：`http://localhost:5173/`（2026-07-20 21:24 检查为 HTTP 200）
-- 最新已记录功能提交：`Prepare stable public site hosting`（本次提交）
+- 最新已记录功能提交：`Add GitHub Pages public preview`（本次提交）
 - 生产环境：尚无正式部署记录
 
 ## 历史操作记录
@@ -64,6 +64,16 @@
 | 18:01 | `9951483` | 修正课程卡片的空间方向和课程顺序：向上滑时所有可见卡片向上、下一节从下方进入；卡片区拦截页面滚动，左侧和中间区域保留正常页面滚动。构建及浏览器交互测试通过。 |
 
 ## 运行与部署记录
+
+### 2026-07-20 21:31
+
+- 类型：GitHub Pages 公网预览发布准备。
+- 目标：在托管包上传受当前网络限制时，改用项目现有 GitHub 仓库生成稳定的公开预览地址。
+- 改动：加入 GitHub Pages 自动构建与发布工作流；生产构建支持仓库子路径；Logo、课程媒体与第二页作品素材统一使用 Vite 基础路径，保持本地根路径预览不变。
+- 涉及文件：`.github/workflows/deploy-pages.yml`、`vite.config.js`、`src/App.jsx`、`src/components/WorksShowcase.jsx`。
+- 验证：使用 `VITE_BASE_PATH=/nana-website/ npm run build` 构建通过，产物中的脚本、样式、15 个课程视频、Logo 与 8 张作品图均带有 `/nana-website/` 前缀；发布工作流待远端执行完成后再记录最终状态。
+- 部署状态：源码待推送触发 GitHub Pages；此条记录不将尚未完成的发布标记为成功。
+- Git：`Add GitHub Pages public preview`（本次提交并推送至 `origin/main`）。
 
 ### 2026-07-20 21:24
 
