@@ -1,6 +1,6 @@
 # NaNa 课程网站项目更新日志
 
-最后更新：2026-07-20 21:31（Asia/Shanghai）
+最后更新：2026-07-20 21:53（Asia/Shanghai）
 
 这份文档记录本项目的功能操作、素材变更、验证结果、Git 保存和部署情况。历史内容依据当前项目对话与 Git 提交记录整理；首次 Git 提交以前的操作没有独立提交号，因此按开发阶段归纳。
 
@@ -20,7 +20,7 @@
 - 当前分支：`main`
 - GitHub：`https://github.com/huiMiluMilu/nana-website.git`
 - 本地开发预览：`http://localhost:5173/`（2026-07-20 21:24 检查为 HTTP 200）
-- 最新已记录功能提交：`Add GitHub Pages public preview`（本次提交）
+- 最新已记录功能提交：`Fix GitHub Pages package setup`（本次提交）
 - 生产环境：尚无正式部署记录
 
 ## 历史操作记录
@@ -64,6 +64,17 @@
 | 18:01 | `9951483` | 修正课程卡片的空间方向和课程顺序：向上滑时所有可见卡片向上、下一节从下方进入；卡片区拦截页面滚动，左侧和中间区域保留正常页面滚动。构建及浏览器交互测试通过。 |
 
 ## 运行与部署记录
+
+### 2026-07-20 21:53
+
+- 类型：GitHub Pages 自动发布修复。
+- 目标：修复首次公网预览工作流的依赖安装失败。
+- 原因：项目使用已提交的 `pnpm-lock.yaml`，首次工作流错误地按 npm 锁文件启用缓存并执行 `npm ci`，因此在安装依赖前终止。
+- 改动：远端工作流改用 pnpm 10、pnpm 缓存、冻结锁文件安装和 pnpm 构建。
+- 涉及文件：`.github/workflows/deploy-pages.yml`。
+- 验证：首次失败原因已从 GitHub Actions 运行记录确认；修复后的工作流待本次推送重新执行。
+- 部署状态：第一次 GitHub Pages 发布失败，修复版本待远端重新发布；未将失败发布写成成功。
+- Git：`Fix GitHub Pages package setup`（本次提交并推送至 `origin/main`）。
 
 ### 2026-07-20 21:31
 
