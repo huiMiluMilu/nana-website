@@ -1,6 +1,6 @@
 # NaNa 课程网站项目更新日志
 
-最后更新：2026-07-19 18:10（Asia/Shanghai）
+最后更新：2026-07-20 21:24（Asia/Shanghai）
 
 这份文档记录本项目的功能操作、素材变更、验证结果、Git 保存和部署情况。历史内容依据当前项目对话与 Git 提交记录整理；首次 Git 提交以前的操作没有独立提交号，因此按开发阶段归纳。
 
@@ -19,8 +19,8 @@
 - 技术：React、Vite、OGL、Remotion
 - 当前分支：`main`
 - GitHub：`https://github.com/huiMiluMilu/nana-website.git`
-- 本地开发预览：`http://localhost:5173/`（2026-07-19 18:10 检查为 HTTP 200）
-- 最新已记录功能提交：`Redesign works page as dark archive`（本次提交）
+- 本地开发预览：`http://localhost:5173/`（2026-07-20 21:24 检查为 HTTP 200）
+- 最新已记录功能提交：`Prepare stable public site hosting`（本次提交）
 - 生产环境：尚无正式部署记录
 
 ## 历史操作记录
@@ -64,6 +64,16 @@
 | 18:01 | `9951483` | 修正课程卡片的空间方向和课程顺序：向上滑时所有可见卡片向上、下一节从下方进入；卡片区拦截页面滚动，左侧和中间区域保留正常页面滚动。构建及浏览器交互测试通过。 |
 
 ## 运行与部署记录
+
+### 2026-07-20 21:24
+
+- 类型：公网预览托管准备与本地服务恢复。
+- 目标：生成可供他人直接访问、且不依赖本地电脑持续运行的稳定预览链接。
+- 操作：恢复 5173 端口 Vite 预览并验证 HTTP 200；尝试 Cloudflare Quick Tunnel，因当前网络阻断 QUIC 与 HTTP/2 边缘连接而停止，未将不可用的临时地址交付。随后创建正式托管站点，并为现有 Vite 静态站补充托管配置与静态资源 Worker 输出。
+- 涉及文件：`.openai/hosting.json`、`hosting/worker.js`、`vite.config.js`。
+- 验证：`npm run build` 通过，生成 `dist/client/index.html` 与 `dist/server/index.js`；托管发布尚在进行中，不在此条记录中标记为成功。
+- 部署状态：本地预览已恢复；临时隧道失败并已关闭；正式托管待发布验证。
+- Git：`Prepare stable public site hosting`（本次提交并推送至 `origin/main`）。
 
 ### 2026-07-19 18:10
 
