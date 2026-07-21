@@ -63,7 +63,7 @@ function CourseVisual({ theme, media }) {
         loop
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
       />
     );
@@ -329,6 +329,20 @@ export default function CylinderCarousel() {
         card.dataset.active = String(isActive);
         card.setAttribute('aria-hidden', isActive ? 'false' : 'true');
         card.style.transform = `translate3d(0, ${y.toFixed(2)}px, ${z.toFixed(2)}px) rotateX(${(sign * rotation + tiltX).toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) rotateZ(-3deg)`;
+
+        const video = card.querySelector('video');
+        const shouldPlayMedia = queueOpacity > 0.01;
+
+        if (video && shouldPlayMedia && video.paused) {
+          const lastPlayAttempt = Number(card.dataset.lastMediaPlayAttempt ?? 0);
+
+          if (time - lastPlayAttempt > 500) {
+            card.dataset.lastMediaPlayAttempt = String(time);
+            video.play()?.catch(() => {});
+          }
+        } else if (video && !shouldPlayMedia && !video.paused) {
+          video.pause();
+        }
       });
 
       const hitCard = mouse.clientX >= 0
