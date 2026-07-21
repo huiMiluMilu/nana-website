@@ -1,6 +1,6 @@
 # NaNa 课程网站项目更新日志
 
-最后更新：2026-07-21 16:21（Asia/Shanghai）
+最后更新：2026-07-21 17:35（Asia/Shanghai）
 
 这份文档记录本项目的功能操作、素材变更、验证结果、Git 保存和部署情况。历史内容依据当前项目对话与 Git 提交记录整理；首次 Git 提交以前的操作没有独立提交号，因此按开发阶段归纳。
 
@@ -20,10 +20,20 @@
 - 当前分支：`main`
 - GitHub：`https://github.com/huiMiluMilu/nana-website.git`
 - 本地开发预览：`http://localhost:5173/`（2026-07-21 16:10 已恢复并完成页面检查）
-- 最新已记录功能提交：`Add audiovisual community page`（本次提交）
-- 生产环境：Vercel 已完成构建；公开域名待登录控制台读取并完成最终页面验证
+- 最新已记录功能提交：`Add audiovisual community page`（`1d4d754`）
+- 生产环境：Vercel 已完成提交 `1d4d754` 的生产部署，部署记录为 `79mMkwwynFvHX5ynqiTTMZnazKnC`；公开域名待登录控制台读取并完成最终页面验证
 
 ## 历史操作记录
+
+### 2026-07-21 17:35
+
+- 类型：GitHub 推送与 Vercel 生产部署验证。
+- 目标：确认第三页社团入口及第二页字体调整已进入远程主分支，并由 Vercel 完成部署。
+- GitHub：提交 `5489d33`（第二页中文黑体）与 `1d4d754`（第三页社团入口）已推送至 `origin/main`。
+- 部署状态：GitHub 对提交 `1d4d754` 显示 `1 / 1` 状态检查通过；Vercel 明确返回 `Deployment has completed`。
+- 部署记录：`https://vercel.com/huimilumilus-projects/nana-website/79mMkwwynFvHX5ynqiTTMZnazKnC`。
+- 验证范围：已确认 Vercel 构建与部署完成；由于公开生产域名未在未登录页面展示，本条不将公开域名页面访问写成已验证。
+- Git：本条部署日志将单独提交并推送至 `origin/main`。
 
 ### 2026-07-21 16:21
 
@@ -33,7 +43,7 @@
 - 交互：入口保留原始微信小店口令 `#微信小店://风变AI社团小店/NA2zX795SJCaRkh`；支持剪贴板时，点击按钮会复制口令并提示用户前往微信打开，不支持时保留原始链接回退。
 - 涉及文件：`src/components/CommunityJoin.jsx`、`src/components/CommunityJoin.css`、`src/App.jsx`。
 - 验证：`npm run build` 通过；在 1280×720 桌面视口确认第三页完整分栏与入场券视觉，在 390×844 移动视口确认自动切换为上下布局且页面无横向溢出；点击微信入口后按钮成功切换为“已复制，去微信打开”，并确认 `href` 保留用户提供的完整口令。
-- 部署状态：本地修改已验证；推送 `origin/main` 后由 Vercel 自动部署。
+- 部署状态：本地修改已验证；提交 `1d4d754` 推送 `origin/main` 后，Vercel 已完成部署。
 - Git：`Add audiovisual community page`（本次提交并推送至 `origin/main`）。
 
 ### 2026-07-21 16:10
