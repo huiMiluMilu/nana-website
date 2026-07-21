@@ -1,6 +1,6 @@
 # NaNa 课程网站项目更新日志
 
-最后更新：2026-07-21 18:05（Asia/Shanghai）
+最后更新：2026-07-21 18:09（Asia/Shanghai）
 
 这份文档记录本项目的功能操作、素材变更、验证结果、Git 保存和部署情况。历史内容依据当前项目对话与 Git 提交记录整理；首次 Git 提交以前的操作没有独立提交号，因此按开发阶段归纳。
 
@@ -20,8 +20,8 @@
 - 当前分支：`main`
 - GitHub：`https://github.com/huiMiluMilu/nana-website.git`
 - 本地开发预览：`http://localhost:5173/`（2026-07-21 18:05 可访问）；生产构建预览：`http://127.0.0.1:4173/`（2026-07-21 18:05 已启动并完成检查）
-- 最新改动：课程卡片媒体渐进加载与轻量封面（本次提交）
-- 生产环境：Vercel 已完成提交 `1d4d754` 的生产部署，部署记录为 `79mMkwwynFvHX5ynqiTTMZnazKnC`；公开域名待登录控制台读取并完成最终页面验证
+- 最新功能提交：`Optimize course media loading`（`7872e83`）
+- 生产环境：Vercel 已完成提交 `7872e83` 的生产部署，部署记录为 `Deycxj6955CQjTYUSHegMJqWD1jo`；公开域名待登录控制台读取并完成最终页面验证
 
 ## 历史操作记录
 
@@ -35,8 +35,8 @@
 - 涉及文件：`src/components/CylinderCarousel.jsx`、`output/posters/01-prompt-system.jpg` 至 `output/posters/15-infinite-ad.jpg`。
 - 构建与预览：`npm run build` 通过；`http://localhost:5173/` 开发预览可访问；`npm run preview -- --host 127.0.0.1 --port 4173` 已启动生产构建预览。
 - 验证：生产预览首屏保持 7 个卡片媒体位，但只创建 3 个视频元素和 4 个静态封面元素；首屏仅请求 3 个 MP4、7 张 JPEG，3 个视频均进入可播放状态，主卡持续播放。模拟视频全部失败时，封面仍能完整显示、无破图；滚轮切换课程后，新主卡视频 `readyState=4`、持续播放且课程标题正确变化。
-- 部署状态：本地修改、构建与交互已验证；待本次提交推送 `origin/main` 后由 Vercel 自动部署。
-- Git：待创建并推送本次提交。
+- 部署状态：提交 `7872e83` 推送 `origin/main` 后，GitHub 显示 `1 / 1` 状态检查通过，Vercel 返回 `Deployment has completed`；部署记录：`https://vercel.com/huimilumilus-projects/nana-website/Deycxj6955CQjTYUSHegMJqWD1jo`。
+- Git：`Optimize course media loading`（`7872e83`，已推送至 `origin/main`）。
 
 ### 2026-07-21 17:35
 
