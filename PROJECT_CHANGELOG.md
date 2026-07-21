@@ -1,6 +1,6 @@
 # NaNa 课程网站项目更新日志
 
-最后更新：2026-07-20 21:53（Asia/Shanghai）
+最后更新：2026-07-21 14:35（Asia/Shanghai）
 
 这份文档记录本项目的功能操作、素材变更、验证结果、Git 保存和部署情况。历史内容依据当前项目对话与 Git 提交记录整理；首次 Git 提交以前的操作没有独立提交号，因此按开发阶段归纳。
 
@@ -19,8 +19,8 @@
 - 技术：React、Vite、OGL、Remotion
 - 当前分支：`main`
 - GitHub：`https://github.com/huiMiluMilu/nana-website.git`
-- 本地开发预览：`http://localhost:5173/`（2026-07-20 21:24 检查为 HTTP 200）
-- 最新已记录功能提交：`Fix GitHub Pages package setup`（本次提交）
+- 本地开发预览：`http://localhost:5173/`（2026-07-21 14:35 检查为 HTTP 200）
+- 最新已记录功能提交：`Fix Vercel output directory`（本次提交）
 - 生产环境：尚无正式部署记录
 
 ## 历史操作记录
@@ -64,6 +64,17 @@
 | 18:01 | `9951483` | 修正课程卡片的空间方向和课程顺序：向上滑时所有可见卡片向上、下一节从下方进入；卡片区拦截页面滚动，左侧和中间区域保留正常页面滚动。构建及浏览器交互测试通过。 |
 
 ## 运行与部署记录
+
+### 2026-07-21 14:35
+
+- 类型：Vercel 404 修复与托管方式切换。
+- 目标：修复现有 Vercel 部署打开后显示 404 的问题，并将 Vercel 作为当前公开预览渠道。
+- 原因：此前为另一托管平台把 Vite 产物输出到 `dist/client`，而 Vercel 的 Vite 预设发布 `dist`，导致部署中找不到根目录 `index.html`。
+- 改动：恢复标准 Vite `dist` 输出；新增 `vercel.json` 明确框架、安装、构建和输出目录；移除未成功启用的 Sites Worker 与项目绑定；同步调整备用 GitHub Pages 工作流的上传目录。
+- 涉及文件：`vite.config.js`、`vercel.json`、`.github/workflows/deploy-pages.yml`、删除 `.openai/hosting.json` 与 `hosting/worker.js`。
+- 验证：`npm run build` 通过，确认 `dist/index.html` 存在且不再生成 `dist/client/index.html`；`http://localhost:5173/` 返回 HTTP 200。Vercel 重新部署待本次推送后远端执行。
+- 部署状态：Vercel 旧部署为 404；修复源码待推送并触发重新部署，本条记录不将远端发布标记为成功。
+- Git：`Fix Vercel output directory`（本次提交并推送至 `origin/main`）。
 
 ### 2026-07-20 21:53
 
