@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import SoftAurora from './components/SoftAurora';
 import CylinderCarousel from './components/CylinderCarousel';
 import WorksShowcase from './components/WorksShowcase';
+import CommunityJoin from './components/CommunityJoin';
 
 export default function App() {
   const landingRef = useRef(null);
@@ -122,6 +123,7 @@ export default function App() {
       </section>
 
       <WorksShowcase />
+      <CommunityJoin />
     </main>
   );
 }
