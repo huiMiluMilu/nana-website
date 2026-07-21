@@ -1,6 +1,6 @@
 # NaNa 课程网站项目更新日志
 
-最后更新：2026-07-21 15:43（Asia/Shanghai）
+最后更新：2026-07-21 16:10（Asia/Shanghai）
 
 这份文档记录本项目的功能操作、素材变更、验证结果、Git 保存和部署情况。历史内容依据当前项目对话与 Git 提交记录整理；首次 Git 提交以前的操作没有独立提交号，因此按开发阶段归纳。
 
@@ -19,11 +19,21 @@
 - 技术：React、Vite、OGL、Remotion
 - 当前分支：`main`
 - GitHub：`https://github.com/huiMiluMilu/nana-website.git`
-- 本地开发预览：`http://localhost:5173/`（2026-07-21 14:35 检查为 HTTP 200）
-- 最新已记录功能提交：`Resume visible course previews`（本次提交）
+- 本地开发预览：`http://localhost:5173/`（2026-07-21 16:10 已恢复并完成页面检查）
+- 最新已记录功能提交：`Use sans serif Chinese work titles`（本次提交）
 - 生产环境：Vercel 已完成构建；公开域名待登录控制台读取并完成最终页面验证
 
 ## 历史操作记录
+
+### 2026-07-21 16:10
+
+- 类型：第二页作品标题中文字体调整。
+- 目标：仅将第二页作品卡片标题里的中文从宋体风格改为黑体风格，保留现有英文衬线字体与整体排版。
+- 改动：在作品标题字体栈中为 Cormorant Garamond 补充苹方、冬青黑体与微软雅黑等中文无衬线字体回退；中文采用黑体，英文仍优先使用原有字体。
+- 涉及文件：`src/components/WorksShowcase.css`。
+- 验证：`npm run build` 通过；恢复 `http://localhost:5173/` 本地预览后，浏览器确认作品标题字体栈包含 `PingFang SC`，本机苹方字体可用，并目视确认卡片中文已呈现为黑体。
+- 部署状态：本地修改待验证；Vercel 自动部署待本次推送触发。
+- Git：`Use sans serif Chinese work titles`（本次提交并推送至 `origin/main`）。
 
 ### 2026-07-21 15:43
 
