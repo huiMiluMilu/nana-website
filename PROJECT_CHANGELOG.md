@@ -1,6 +1,6 @@
 # NaNa 课程网站项目更新日志
 
-最后更新：2026-07-21 14:35（Asia/Shanghai）
+最后更新：2026-07-21 14:53（Asia/Shanghai）
 
 这份文档记录本项目的功能操作、素材变更、验证结果、Git 保存和部署情况。历史内容依据当前项目对话与 Git 提交记录整理；首次 Git 提交以前的操作没有独立提交号，因此按开发阶段归纳。
 
@@ -20,8 +20,8 @@
 - 当前分支：`main`
 - GitHub：`https://github.com/huiMiluMilu/nana-website.git`
 - 本地开发预览：`http://localhost:5173/`（2026-07-21 14:35 检查为 HTTP 200）
-- 最新已记录功能提交：`Fix Vercel output directory`（本次提交）
-- 生产环境：尚无正式部署记录
+- 最新已记录功能提交：`Remove inactive Pages workflow`（本次提交）
+- 生产环境：Vercel 已完成构建；公开域名待登录控制台读取并完成最终页面验证
 
 ## 历史操作记录
 
@@ -64,6 +64,15 @@
 | 18:01 | `9951483` | 修正课程卡片的空间方向和课程顺序：向上滑时所有可见卡片向上、下一节从下方进入；卡片区拦截页面滚动，左侧和中间区域保留正常页面滚动。构建及浏览器交互测试通过。 |
 
 ## 运行与部署记录
+
+### 2026-07-21 14:53
+
+- 类型：Vercel 修复版本远端构建确认与发布流程清理。
+- 目标：确认 404 修复提交已由 Vercel 完成部署，并停止已停用、会在每次推送时失败的 GitHub Pages 工作流。
+- 改动：删除 `.github/workflows/deploy-pages.yml`；Vercel 保持为唯一自动部署渠道。
+- 验证：GitHub 提交 `71abb3c` 的状态检查显示 `Vercel - Deployment has completed`；Vercel 控制台的新部署记录为 `4DaR4k74QdzJ3dyrHXT3M7fAjn1H`。当前浏览器未登录 Vercel，暂时无法读取并验证该部署生成的公开域名。
+- 部署状态：Vercel 远端构建已完成；公开页面最终访问验证待控制台登录后进行，不将其提前记录为已验证上线。
+- Git：`Remove inactive Pages workflow`（本次提交并推送至 `origin/main`）。
 
 ### 2026-07-21 14:35
 
